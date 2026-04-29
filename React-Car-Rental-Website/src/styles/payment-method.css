@@ -1,0 +1,65 @@
+.payment-method-item {
+  border: 1px solid #d9d9d9;
+  background: #ffffff;
+  transition: all 0.25s ease;
+}
+
+.payment-method-item:hover {
+  transform: translateY(-2px);
+  border-color: #000d6b;
+}
+
+.payment-method-label {
+  font-weight: 600;
+  color: #000d6b;
+  width: 100%;
+}
+
+.payment-method-label input {
+  accent-color: #000d6b;
+}
+
+.payment-method-img img {
+  max-width: 60px;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.payment-method-footer {
+  margin-top: 1rem;
+}
+
+.payment-method-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: #000d6b;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.payment-method-btn:hover {
+  background: #0f1791;
+}
+
+@media only screen and (max-width: 768px) {
+  .payment-method-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .payment-method-img {
+    margin-top: 0.75rem;
+  }
+
+  .payment-method-footer {
+    text-align: left;
+  }
+
+  .payment-method-btn {
+    width: 100%;
+  }
+}

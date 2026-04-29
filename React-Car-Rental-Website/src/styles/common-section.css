@@ -1,0 +1,53 @@
+.common__section {
+  background: linear-gradient(rgb(0, 13, 107, 0.6), rgb(0, 13, 107, 0.6)),
+    url("../assets/all-images/drive.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 80px 0px;
+}
+
+/* Login styles */
+.login__form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #7c8a9736;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.login__form-group {
+  margin-bottom: 20px;
+}
+
+.login__form input {
+  padding: 10px 15px;
+  border: 1px solid #7c8a972a;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.login__form input:focus {
+  outline: none;
+  border-color: #f9a826;
+}
+
+.login__btn {
+  width: 100%;
+  padding: 12px;
+  background: #f9a826;
+  color: #000d6b;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.login__btn:hover {
+  background: #000d6b;
+  color: #f9a826;
+}
