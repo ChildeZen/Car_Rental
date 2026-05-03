@@ -80,7 +80,7 @@ const Header = () => {
             <Col
               lg="2"
               md="3"
-              sm="4"
+              sm="0"
               className=" d-flex align-items-center justify-content-end "
             >
               <div className="header__btns d-flex align-items-center gap-3">
