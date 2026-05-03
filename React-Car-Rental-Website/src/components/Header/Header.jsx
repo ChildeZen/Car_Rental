@@ -102,15 +102,12 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <button className="header__btn">
-                      <Link
-                        to="/login"
-                        className=" d-flex align-items-center gap-1"
-                      >
+                    <button className="header__btn d-block">
+                      <Link to="/login" className="d-flex align-items-center gap-1">
                         <i className="ri-login-circle-line"></i> Login
                       </Link>
                     </button>
-                    <button className="header__btn">
+                    <button className="header__btn d-block">
                       <Link
                         to="/register"
                         className=" d-flex align-items-center gap-1"
