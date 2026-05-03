@@ -58,7 +58,7 @@ const Home = () => {
           <Row>
             <Col lg="12" className="mb-4 text-center">
               <h6 className="section__subtitle">Our clients says</h6>
-              <h2 className="section__title">Review</h2>
+              <h2 className="section__title"></h2>
             </Col>
 
             <Testimonial />
