@@ -206,6 +206,40 @@ const CarDetails = () => {
               </div>
             </Col>
 
+            {/* Tambahkan ini di dalam Col lg="7" atau tempat yang sesuai di CarDetails.jsx */}
+              <div className="requirements__box mt-4 p-4" style={{ backgroundColor: "#f0f0f0", borderRadius: "10px" }}>
+                <h5 className="mb-3 fw-bold" style={{ color: "#000d6b" }}>
+                  <i className="ri-information-line"></i> Syarat Sewa Lepas Kunci
+                </h5>
+                
+                <ul className="list-unstyled">
+                  <li className="mb-2 d-flex align-items-center gap-2">
+                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                    <span>E-KTP Asli (Domisili sesuai kota rental)</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-center gap-2">
+                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                    <span>SIM A Aktif (Wajib difoto/upload)</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-center gap-2">
+                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                    <span>Kartu Keluarga / KTM (Untuk Mahasiswa)</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-center gap-2">
+                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                    <span>Jaminan Sepeda Motor + STNK asli (Ditinggal)</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-center gap-2">
+                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                    <span className="fw-bold text-danger">Wajib DP 20% untuk kunci jadwal</span>
+                  </li>
+                </ul>
+                
+                <p className="small text-muted mt-3">
+                  * Tim kami akan melakukan verifikasi data dalam 1x24 jam setelah Anda melakukan booking.
+                </p>
+              </div>
+
             {/* Bagian Form Booking (Kiri) */}
             <Col lg="7" className="mt-5">
               <div className="booking-info mt-5 p-4 shadow-sm rounded-3">

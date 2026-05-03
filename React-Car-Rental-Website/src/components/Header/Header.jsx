@@ -144,7 +144,27 @@ const Header = () => {
                   >
                     {item.display}
                   </NavLink>
+                  
                 ))}
+                <div className="mobile__auth-btns d-lg-none mt-4 pt-3" style={{ borderTop: "1px solid #efefef" }}>
+                  {isLoggedIn ? (
+                    <div className="d-flex flex-column gap-3">
+                       <span className="nav__item text-dark">Halo, {user?.username}</span>
+                       <button className="header__btn logout__btn w-100" onClick={handleLogout}>
+                          <i className="ri-logout-circle-line"></i> Logout
+                       </button>
+                    </div>
+                  ) : (
+                    <div className="d-flex flex-column gap-3">
+                      <Link to="/login" className="nav__item d-flex align-items-center gap-2">
+                        <i className="ri-login-circle-line"></i> Login
+                      </Link>
+                      <Link to="/register" className="nav__item d-flex align-items-center gap-2">
+                        <i className="ri-user-line"></i> Register
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
