@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/booking-form.css';
 import {
   Container,
@@ -12,8 +12,16 @@ import {
   Alert,
 } from 'reactstrap';
 
-const BookingForm = ({ bookingData, onChange, onBookingSubmit }) => {
+const BookingForm = ({ bookingData, onChange, onBookingSubmit, carId, bookedDates = [] }) => {
   const [simPhoto, setSimPhoto] = useState(null);
+
+  const today = new Date().toISOString().split('T')[0];
+
+  useEffect(() => {
+    if (bookedDates.includes(bookingData.journeyDate)) {
+      onChange({ target: { name: 'journeyDate', value: '' } });
+    }
+  }, [bookedDates, bookingData.journeyDate, onChange]);
 
   const handleSimPhotoChange = (e) => {
     setSimPhoto(e.target.files[0]);
@@ -96,10 +104,13 @@ const BookingForm = ({ bookingData, onChange, onBookingSubmit }) => {
         <input
           name="journeyDate"
           type="date"
+          min={today}
           required
+          disabled={bookedDates.includes(bookingData.journeyDate)}
           value={bookingData.journeyDate}
           onChange={onChange}
         />
+
       </FormGroup>
       <FormGroup className="booking__form d-inline-block ms-1 mb-4">
         <input

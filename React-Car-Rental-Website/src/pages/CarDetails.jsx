@@ -6,7 +6,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import BookingForm from '../components/UI/BookingForm';
 import PaymentMethod from '../components/UI/PaymentMethod';
 import ProofUploadModal from '../components/UI/ProofUploadModal';
-import { addBooking } from '../utils/bookingUtils';
+import { addBooking, getBookedDates, isCarAvailable } from '../utils/bookingUtils';
 import { AuthContext } from '../context/AuthContext'; // Pastikan path ke context benar
 
 const CarDetails = () => {
@@ -32,6 +32,15 @@ const CarDetails = () => {
   const [showProofModal, setShowProofModal] = useState(false);
 
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const [bookedDates, setBookedDates] = useState([]);
+
+  useEffect(() => {
+    if (singleCarItem) {
+      const dates = getBookedDates(singleCarItem.id);
+      setBookedDates(dates);
+    }
+  }, [singleCarItem]);
 
   const navigate = useNavigate();
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -64,6 +73,11 @@ const CarDetails = () => {
       alert('Silakan lengkapi data reservasi');
       return;
     }
+    const dates = [bookingData.journeyDate];
+    if (!isCarAvailable(singleCarItem.id, dates)) {
+      alert('Tanggal yang dipilih sudah dibooking oleh user lain. Pilih tanggal lain.');
+      return;
+    }
     setShowProofModal(true);
   };
 
@@ -73,7 +87,7 @@ const CarDetails = () => {
       navigate(`/login?returnUrl=/cars/${slug}`);
       return;
     }
-    const carId = singleCarItem.carName;
+    const carId = singleCarItem.id;
     const dates = [bookingData.journeyDate];
     const fullInfo = {
       ...data,
@@ -207,38 +221,38 @@ const CarDetails = () => {
             </Col>
 
             {/* Tambahkan ini di dalam Col lg="7" atau tempat yang sesuai di CarDetails.jsx */}
-              <div className="requirements__box mt-4 p-4" style={{ backgroundColor: "#f0f0f0", borderRadius: "10px" }}>
-                <h5 className="mb-3 fw-bold" style={{ color: "#000d6b" }}>
-                  <i className="ri-information-line"></i> Syarat Sewa Lepas Kunci
-                </h5>
-                
-                <ul className="list-unstyled">
-                  <li className="mb-2 d-flex align-items-center gap-2">
-                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
-                    <span>E-KTP Asli (Domisili sesuai kota rental)</span>
-                  </li>
-                  <li className="mb-2 d-flex align-items-center gap-2">
-                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
-                    <span>SIM A Aktif (Wajib difoto/upload)</span>
-                  </li>
-                  <li className="mb-2 d-flex align-items-center gap-2">
-                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
-                    <span>Kartu Keluarga / KTM (Untuk Mahasiswa)</span>
-                  </li>
-                  <li className="mb-2 d-flex align-items-center gap-2">
-                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
-                    <span>Jaminan Sepeda Motor + STNK asli (Ditinggal)</span>
-                  </li>
-                  <li className="mb-2 d-flex align-items-center gap-2">
-                    <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
-                    <span className="fw-bold text-danger">Wajib DP 20% untuk kunci jadwal</span>
-                  </li>
-                </ul>
-                
-                <p className="small text-muted mt-3">
-                  * Tim kami akan melakukan verifikasi data dalam 1x24 jam setelah Anda melakukan booking.
-                </p>
-              </div>
+            <div className="requirements__box mt-4 p-4" style={{ backgroundColor: "#f0f0f0", borderRadius: "10px" }}>
+              <h5 className="mb-3 fw-bold" style={{ color: "#000d6b" }}>
+                <i className="ri-information-line"></i> Syarat Sewa Lepas Kunci
+              </h5>
+
+              <ul className="list-unstyled">
+                <li className="mb-2 d-flex align-items-center gap-2">
+                  <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                  <span>E-KTP Asli (Domisili sesuai kota rental)</span>
+                </li>
+                <li className="mb-2 d-flex align-items-center gap-2">
+                  <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                  <span>SIM A Aktif (Wajib difoto/upload)</span>
+                </li>
+                <li className="mb-2 d-flex align-items-center gap-2">
+                  <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                  <span>Kartu Keluarga / KTM (Untuk Mahasiswa)</span>
+                </li>
+                <li className="mb-2 d-flex align-items-center gap-2">
+                  <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                  <span>Jaminan Sepeda Motor + STNK asli (Ditinggal)</span>
+                </li>
+                <li className="mb-2 d-flex align-items-center gap-2">
+                  <i className="ri-checkbox-circle-fill" style={{ color: "#f9a826" }}></i>
+                  <span className="fw-bold text-danger">Wajib DP 20% untuk kunci jadwal</span>
+                </li>
+              </ul>
+
+              <p className="small text-muted mt-3">
+                * Tim kami akan melakukan verifikasi data dalam 1x24 jam setelah Anda melakukan booking.
+              </p>
+            </div>
 
             {/* Bagian Form Booking (Kiri) */}
             <Col lg="7" className="mt-5">
@@ -248,6 +262,8 @@ const CarDetails = () => {
                   bookingData={bookingData}
                   onChange={onBookingChange}
                   onBookingSubmit={onPaymentSubmit}
+                  carId={singleCarItem.id}
+                  bookedDates={bookedDates}
                 />
               </div>
             </Col>

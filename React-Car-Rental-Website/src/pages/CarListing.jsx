@@ -16,12 +16,15 @@ const CarListing = () => {
 
   useEffect(() => {
     if (location.state?.filters) {
-      const { journeyDate, brand } = location.state.filters;
+      const { journeyDate, journeyTime, brand, searchQuery } = location.state.filters;
       if (journeyDate) {
         setSelectedDates([journeyDate]);
       }
-      if (brand) {
+      if (brand && brand !== 'all') {
         setFilterBrand(brand);
+      }
+      if (searchQuery) {
+        setSearchQuery(searchQuery);
       }
     }
   }, [location.state]);

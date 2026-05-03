@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 
 import { Container, Row, Col } from 'reactstrap';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -28,6 +28,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { isLoggedIn, user, logout } = useContext(AuthContext);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const toggleMenu = () => menuRef.current.classList.toggle('menu__active');
 
@@ -144,15 +145,15 @@ const Header = () => {
                   >
                     {item.display}
                   </NavLink>
-                  
+
                 ))}
                 <div className="mobile__auth-btns d-lg-none mt-4 pt-3" style={{ borderTop: "1px solid #efefef" }}>
                   {isLoggedIn ? (
                     <div className="d-flex flex-column gap-3">
-                       <span className="nav__item text-dark">Halo, {user?.username}</span>
-                       <button className="header__btn logout__btn w-100" onClick={handleLogout}>
-                          <i className="ri-logout-circle-line"></i> Logout
-                       </button>
+                      <span className="nav__item text-dark">Halo, {user?.username}</span>
+                      <button className="header__btn logout__btn w-100" onClick={handleLogout}>
+                        <i className="ri-logout-circle-line"></i> Logout
+                      </button>
                     </div>
                   ) : (
                     <div className="d-flex flex-column gap-3">
@@ -169,12 +170,26 @@ const Header = () => {
             </div>
 
             <div className="nav__right">
-              <div className="search__box">
-                <input type="text" placeholder="Search" />
-                <span>
+              <form
+                className="search__box d-flex align-items-center gap-2"
+                style={{ width: '250px' }}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (searchTerm.trim()) {
+                    navigate('/cars', { state: { filters: { searchQuery: searchTerm } } });
+                  }
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="Search cars..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit" style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
                   <i className="ri-search-line"></i>
-                </span>
-              </div>
+                </button>
+              </form>
             </div>
           </div>
         </Container>
