@@ -1,28 +1,40 @@
-import { useState, useContext } from 'react'
-import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../context/AuthContext'
-import '../styles/login.css'
+import { useState, useContext } from 'react';
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Alert,
+} from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import '../styles/login.css';
+import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
-  const { login } = useContext(AuthContext)
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Simple validation - in real app, this would be API call
     if (username === 'admin' && password === 'password') {
-      const userData = { username }
-      login(userData)
-      setError('')
-      navigate('/home') // or navigate to intended page
+      const userData = { username };
+      login(userData);
+      setError('');
+      const returnUrl = new URLSearchParams(window.location.search).get('returnUrl') || '/home';
+      navigate(returnUrl);
     } else {
-      setError('Invalid username or password')
+      setError('Invalid username or password');
     }
-  }
+  };
 
   return (
     <div className="login__page">
@@ -37,7 +49,9 @@ export default function LoginForm() {
 
               <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                  <Label for="username" className="form-label">Username</Label>
+                  <Label for="username" className="form-label">
+                    Username
+                  </Label>
                   <Input
                     type="text"
                     id="username"
@@ -50,7 +64,9 @@ export default function LoginForm() {
                 </FormGroup>
 
                 <FormGroup>
-                  <Label for="password" className="form-label">Password</Label>
+                  <Label for="password" className="form-label">
+                    Password
+                  </Label>
                   <Input
                     type="password"
                     id="password"
@@ -62,20 +78,36 @@ export default function LoginForm() {
                   />
                 </FormGroup>
 
-                {error && <Alert color="danger" className="text-center">{error}</Alert>}
+                {error && (
+                  <Alert color="danger" className="text-center">
+                    {error}
+                  </Alert>
+                )}
 
-                <Button type="submit" color="primary" block className="login__btn">
+                <Button
+                  type="submit"
+                  color="primary"
+                  block
+                  className="login__btn"
+                >
                   Sign In
                 </Button>
               </Form>
 
               <div className="text-center mt-4 pt-3 border-top">
-                <p className="mb-0 text-muted">Demo credentials: admin / password</p>
+                <p className="mb-0 text-muted"> Don&apos;t have an account?</p>
+                <Link to="/register" className="text-decoration-none">
+                  Register Now
+                </Link>
+
+                <p className="mb-0 text-muted">
+                  Demo credentials: admin / password
+                </p>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import React from "react";
-import Slider from "react-slick";
+import React from 'react';
+import Slider from 'react-slick';
 
-import "../../styles/testimonial.css";
+import '../../styles/testimonial.css';
 
 const Testimonial = () => {
   const settings = {
@@ -37,11 +37,18 @@ const Testimonial = () => {
     <Slider {...settings}>
       <div className="testimonial py-4 px-3 p-5">
         <p className="section__description">
-          Jujur, ngerental di sini praktis banget. Gak perlu ribet ngisi form panjang-panjang, tinggal connect wallet terus beres. Mobilnya juga bersih, pas banget buat dipake healing tipis-tipis pas weekend bareng temen-temen.
+          JMobil dalam kondisi sangat prima, mesin halus dan responsif. Interior
+          bersih, AC dingin, dan tidak ada bau tidak sedap. Eksterior juga masih
+          mulus tanpa lecet berarti. Sangat nyaman dipakai untuk perjalanan jauh
+          maupun dalam kota.
         </p>
 
         <div className="mt-3 d-flex align-items-center gap-4">
-          <img src= "https://i.pinimg.com/736x/ae/7d/7b/ae7d7b4ba99d0c7a67890f02ed1a9b45.jpg" alt="" className="w-25 h-25 rounded-2" />
+          <img
+            src="https://i.pinimg.com/736x/ae/7d/7b/ae7d7b4ba99d0c7a67890f02ed1a9b45.jpg"
+            alt=""
+            className="w-25 h-25 rounded-2"
+          />
 
           <div>
             <h6 className="mb-0 mt-3">Rama</h6>
@@ -52,11 +59,18 @@ const Testimonial = () => {
 
       <div className="testimonial py-4 px-3 p-5">
         <p className="section__description">
-          Pelayanan yang sangat profesional. Kondisi mobil Innova Zenix-nya sangat prima dan wangi. Sistem booking-nya sangat modern tapi tetep mudah dipahami. Rekomendasi banget buat yang butuh solusi transportasi aman di kota.
+          Kondisi mobil standar, mesin masih hidup normal tapi performa sudah
+          tidak seoptimal dulu. AC kurang dingin dan ada suara kecil saat
+          melewati jalan tidak rata. Perlu sedikit perawatan agar lebih nyaman
+          digunakan.
         </p>
 
         <div className="mt-3 d-flex align-items-center gap-4">
-          <img src="https://i.pinimg.com/1200x/fe/12/a3/fe12a36a4f8dd44542b357204a7f2a10.jpg" alt="" className="w-25 h-25 rounded-2" />
+          <img
+            src="https://i.pinimg.com/1200x/fe/12/a3/fe12a36a4f8dd44542b357204a7f2a10.jpg"
+            alt=""
+            className="w-25 h-25 rounded-2"
+          />
 
           <div>
             <h6 className="mb-0 mt-3">Arzaq</h6>
@@ -67,11 +81,17 @@ const Testimonial = () => {
 
       <div className="testimonial py-4 px-3 p-5">
         <p className="section__description">
-          Sebagai orang yang sering kerja pindah-pindah kota, nyari rental mobil yang gak ribet itu tantangan banget. Tapi di sini, semua prosesnya sat-set banget lewat dashboard aplikasinya
+          Mobil masih layak pakai, mesin normal dan tidak ada kendala besar.
+          Namun terdapat beberapa lecet ringan di bagian bodi dan interior
+          sedikit aus. Secara keseluruhan masih nyaman digunakan.
         </p>
 
         <div className="mt-3 d-flex align-items-center gap-4">
-          <img src="https://i.pinimg.com/1200x/74/1a/3a/741a3a34826bcde19a54f5b77fb34d3c.jpg" alt="" className="w-25 h-25 rounded-2" />
+          <img
+            src="https://i.pinimg.com/1200x/74/1a/3a/741a3a34826bcde19a54f5b77fb34d3c.jpg"
+            alt=""
+            className="w-25 h-25 rounded-2"
+          />
 
           <div>
             <h6 className="mb-0 mt-3">Rafif</h6>

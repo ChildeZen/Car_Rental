@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
+import React, { useEffect } from 'react';
+import { Container, Row, Col, Form, FormGroup, Input } from 'reactstrap';
 
-import { useParams } from "react-router-dom";
-import blogData from "../assets/data/blogData.js";
-import Helmet from "../components/Helmet/Helmet";
-import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import blogData from '../assets/data/blogData.js';
+import Helmet from '../components/Helmet/Helmet';
+import { Link } from 'react-router-dom';
 
-import "../styles/blog-details.css";
+import '../styles/blog-details.css';
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -28,15 +28,15 @@ const BlogDetails = () => {
 
                 <div className="blog__publisher d-flex align-items-center gap-4 mb-4">
                   <span className="blog__author">
-                    <i class="ri-user-line"></i> {blog.author}
+                    <i className="ri-user-line"></i> {blog.author}
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
-                    <i class="ri-calendar-line"></i> {blog.date}
+                    <i className="ri-calendar-line"></i> {blog.date}
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
-                    <i class="ri-time-line"></i> {blog.time}
+                    <i className="ri-time-line"></i> {blog.time}
                   </span>
                 </div>
 
@@ -62,13 +62,13 @@ const BlogDetails = () => {
                     </p>
 
                     <span className="replay d-flex align-items-center gap-1">
-                      <i class="ri-reply-line"></i> Replay
+                      <i className ="ri-reply-line"></i> Replay
                     </span>
                   </div>
                 </div>
 
                 {/* =============== comment form ============ */}
-                {/* <div className="leave__comment-form mt-5">
+              {/* <div className="leave__comment-form mt-5">
                   <h4>Leave a Comment</h4>
                   <p className="section__description">
                     You must sign-in to make or comment a post
@@ -106,9 +106,9 @@ const BlogDetails = () => {
                     <img src={item.imgUrl} alt="" className="w-25 rounded-2" />
                     <h6>
                       <Link to={`/blogs/${item.title}`}>{blog.title}</Link>
-                     </h6>
-                   </div>
-                 </div>
+                    </h6>
+                  </div>
+                </div>
               ))}
             </Col>
           </Row>

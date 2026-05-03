@@ -1,83 +1,156 @@
-import React from "react";
-import "../../styles/booking-form.css";
-import { Form, FormGroup, Row, Col } from "reactstrap";
+import React, { useState } from 'react';
+import '../../styles/booking-form.css';
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Alert,
+} from 'reactstrap';
 
-const BookingForm = () => {
-  const submitHandler = (event) => {
-    event.preventDefault();
+const BookingForm = ({ bookingData, onChange, onBookingSubmit }) => {
+  const [simPhoto, setSimPhoto] = useState(null);
+
+  const handleSimPhotoChange = (e) => {
+    setSimPhoto(e.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dataWithSim = { ...bookingData };
+    if (simPhoto) {
+      dataWithSim.simPhotoUrl = URL.createObjectURL(simPhoto);
+    }
+    onBookingSubmit(dataWithSim);
   };
   return (
-    <Form onSubmit={submitHandler}>
-      <Row>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input type="text" placeholder="First Name" />
-          </FormGroup>
-        </Col>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input type="text" placeholder="Last Name" />
-          </FormGroup>
-        </Col>
-      </Row>
+    <Form onSubmit={handleSubmit}>
+      <FormGroup className="booking__form d-inline-block me-4 mb-4">
+        <input
+          name="firstName"
+          type="text"
+          placeholder="Nama Depan"
+          required
+          value={bookingData.firstName}
+          onChange={onChange}
+        />
+      </FormGroup>
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <input
+          name="lastName"
+          type="text"
+          placeholder="Nama Belakang"
+          required
+          value={bookingData.lastName}
+          onChange={onChange}
+        />
+      </FormGroup>
 
-      <Row>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input type="email" placeholder="Email" />
-          </FormGroup>
-        </Col>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input type="number" placeholder="Phone Number" />
-          </FormGroup>
-        </Col>
-      </Row>
+      <FormGroup className="booking__form d-inline-block me-4 mb-4">
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          value={bookingData.email}
+          onChange={onChange}
+        />
+      </FormGroup>
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <input
+          name="phoneNumber"
+          type="number"
+          placeholder="Nomor Telepon (WA)"
+          required
+          value={bookingData.phoneNumber}
+          onChange={onChange}
+        />
+      </FormGroup>
 
-      <Row>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <select name="" id="">
-              <option value="1 person">1 Person</option>
-              <option value="2 person">2 Person</option>
-              <option value="3 person">3 Person</option>
-              <option value="4 person">4 Person</option>
-              <option value="5+ person">5+ Person</option>
-            </select>
-          </FormGroup>
-        </Col>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input type="text" placeholder="From Address" />
-          </FormGroup>
-        </Col>
-      </Row>
+      <FormGroup className="booking__form d-inline-block me-4 mb-4">
+        <input
+          name="fromAddress"
+          type="text"
+          placeholder="Lokasi Penjemputan"
+          required
+          value={bookingData.fromAddress}
+          onChange={onChange}
+        />
+      </FormGroup>
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <input
+          name="toAddress"
+          type="text"
+          placeholder="Lokasi Tujuan"
+          required
+          value={bookingData.toAddress}
+          onChange={onChange}
+        />
+      </FormGroup>
 
-      <Row>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input type="date" placeholder="Journey Date" />
-          </FormGroup>
-        </Col>
-        <Col lg="6" md="6" sm="12">
-          <FormGroup className="booking__form">
-            <input
-              type="time"
-              placeholder="Journey Time"
-              className="time__picker"
-            />
-          </FormGroup>
-        </Col>
-      </Row>
+      <FormGroup className="booking__form d-inline-block me-4 mb-4">
+        <input
+          name="journeyDate"
+          type="date"
+          required
+          value={bookingData.journeyDate}
+          onChange={onChange}
+        />
+      </FormGroup>
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <input
+          name="journeyTime"
+          type="time"
+          className="time__picker"
+          required
+          value={bookingData.journeyTime}
+          onChange={onChange}
+        />
+      </FormGroup>
 
       <FormGroup>
         <textarea
-          rows={5}
-          type="textarea"
+          name="notes"
+          rows="5"
           className="textarea"
-          placeholder="Write"
+          placeholder="Catatan Tambahan"
+          value={bookingData.notes}
+          onChange={onChange}
         ></textarea>
       </FormGroup>
+
+      <FormGroup>
+        <Label for="simPhoto" className="form-label">
+          Foto SIM (Required)
+        </Label>
+        <Input
+          type="file"
+          id="simPhoto"
+          accept="image/jpeg,image/png,image/jpg"
+          onChange={handleSimPhotoChange}
+          className="form-control"
+          required
+        />
+        {simPhoto && (
+          <div className="mt-2">
+            <img
+              src={URL.createObjectURL(simPhoto)}
+              alt="SIM Preview"
+              style={{ maxWidth: '200px', maxHeight: '150px' }}
+              className="img-thumbnail"
+            />
+          </div>
+        )}
+        <small className="text-muted">JPG/PNG/JPEG, max 5MB</small>
+      </FormGroup>
+
+      <button className="btn reserve__btn mt-4" type="submit">
+        Kirim Reservasi
+      </button>
     </Form>
   );
 };

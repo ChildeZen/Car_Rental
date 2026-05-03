@@ -1,15 +1,34 @@
-import React, { useState } from "react";
-import { Container, Row, Col } from "reactstrap";
-import Helmet from "../components/Helmet/Helmet";
-import CommonSection from "../components/UI/CommonSection";
-import CarItem from "../components/UI/CarItem";
-import carData from "../assets/data/carData";
-import { isCarAvailable } from "../utils/bookingUtils";
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
+import Helmet from '../components/Helmet/Helmet';
+import CommonSection from '../components/UI/CommonSection';
+import CarItem from '../components/UI/CarItem';
+import carData from '../assets/data/carData';
+import { isCarAvailable } from '../utils/bookingUtils';
 
 const CarListing = () => {
-  const [filterBrand, setFilterBrand] = useState("all");
-  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterBrand, setFilterBrand] = useState('all');
+  const [filterCategory, setFilterCategory] = useState('all');
   const [selectedDates, setSelectedDates] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.filters) {
+      const { journeyDate, brand } = location.state.filters;
+      if (journeyDate) {
+        setSelectedDates([journeyDate]);
+      }
+      if (brand) {
+        setFilterBrand(brand);
+      }
+    }
+  }, [location.state]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleFilterBrandChange = (e) => {
     setFilterBrand(e.target.value);
@@ -28,22 +47,28 @@ const CarListing = () => {
     const dates = [];
     const start = new Date(startDate);
     const end = new Date(endDate);
-    
+
     for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
       dates.push(date.toISOString().split('T')[0]);
     }
-    
+
     return dates;
   };
 
-  const uniqueBrands = [...new Set(carData.map(car => car.brand))];
-  const uniqueCategories = [...new Set(carData.map(car => car.category))];
+  const uniqueBrands = [...new Set(carData.map((car) => car.brand))];
+  const uniqueCategories = [...new Set(carData.map((car) => car.category))];
 
-  const filteredCars = carData.filter(car => {
-    const brandMatch = filterBrand === "all" || car.brand === filterBrand;
-    const categoryMatch = filterCategory === "all" || car.category === filterCategory;
-    const availabilityMatch = selectedDates.length === 0 || isCarAvailable(car.id, selectedDates);
-    return brandMatch && categoryMatch && availabilityMatch;
+  const filteredCars = carData.filter((car) => {
+    const brandMatch = filterBrand === 'all' || car.brand === filterBrand;
+    const categoryMatch =
+      filterCategory === 'all' || car.category === filterCategory;
+    const searchMatch =
+      !searchQuery ||
+      car.carName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      car.brand.toLowerCase().includes(searchQuery.toLowerCase());
+    const availabilityMatch =
+      selectedDates.length === 0 || isCarAvailable(car.id, selectedDates);
+    return brandMatch && categoryMatch && searchMatch && availabilityMatch;
   });
 
   return (
@@ -54,15 +79,26 @@ const CarListing = () => {
         <Container>
           <Row>
             <Col lg="12">
-              <div className=" d-flex align-items-center gap-3 mb-5">
+              <div className=" d-flex align-items-center gap-3 mb-5 flex-wrap">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Search brand or car name"
+                  className="form-control"
+                  style={{ maxWidth: '260px' }}
+                />
+
                 <span className=" d-flex align-items-center gap-2">
                   <i className="ri-sort-asc"></i> Filter by Brand
                 </span>
 
                 <select value={filterBrand} onChange={handleFilterBrandChange}>
                   <option value="all">All Brands</option>
-                  {uniqueBrands.map(brand => (
-                    <option key={brand} value={brand}>{brand}</option>
+                  {uniqueBrands.map((brand) => (
+                    <option key={brand} value={brand}>
+                      {brand}
+                    </option>
                   ))}
                 </select>
 
@@ -70,10 +106,15 @@ const CarListing = () => {
                   <i className="ri-sort-asc"></i> Filter by Category
                 </span>
 
-                <select value={filterCategory} onChange={handleFilterCategoryChange}>
+                <select
+                  value={filterCategory}
+                  onChange={handleFilterCategoryChange}
+                >
                   <option value="all">All Categories</option>
-                  {uniqueCategories.map(category => (
-                    <option key={category} value={category}>{category}</option>
+                  {uniqueCategories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
                   ))}
                 </select>
 
@@ -110,14 +151,20 @@ const CarListing = () => {
                   key={item.id}
                   index={index}
                   selectedDates={selectedDates}
-                  isAvailable={selectedDates.length === 0 || isCarAvailable(item.id, selectedDates)}
+                  isAvailable={
+                    selectedDates.length === 0 ||
+                    isCarAvailable(item.id, selectedDates)
+                  }
                 />
               ))
             ) : (
               <Col lg="12">
                 <div className="text-center py-5">
                   <h4>No cars available for selected dates</h4>
-                  <p>Please try different dates or remove the date filter to see all available cars.</p>
+                  <p>
+                    Please try different dates or remove the date filter to see
+                    all available cars.
+                  </p>
                 </div>
               </Col>
             )}

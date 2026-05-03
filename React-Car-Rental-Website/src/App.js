@@ -1,5 +1,5 @@
-import Layout from "./components/Layout/Layout";
-import { AuthProvider } from "./context/AuthContext";
+import Layout from './components/Layout/Layout';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (

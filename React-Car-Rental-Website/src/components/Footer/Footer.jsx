@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react';
 
-import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
-import { Link } from "react-router-dom";
-import "../../styles/footer.css";
+import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import '../../styles/footer.css';
 
 const quickLinks = [
   {
-    path: "/about",
-    display: "About",
+    path: '/about',
+    display: 'About',
   },
 
   {
-    path: "#",
-    display: "Privacy Policy",
+    path: '#',
+    display: 'Privacy Policy',
   },
 
   {
-    path: "/cars",
-    display: "Car Listing",
+    path: '/cars',
+    display: 'Car Listing',
   },
   {
-    path: "/blogs",
-    display: "Blog",
+    path: '/blogs',
+    display: 'Blog',
   },
 
   {
-    path: "/contact",
-    display: "Contact",
+    path: '/contact',
+    display: 'Contact',
   },
 ];
 
@@ -41,15 +41,18 @@ const Footer = () => {
             <div className="logo footer__logo">
               <h1>
                 <Link to="/home" className=" d-flex align-items-center gap-2">
-                  <i class="ri-car-line"></i>
-                  <span>
-                    Rent Car <br /> Service
-                  </span>
+                  <i className="ri-car-line"></i>
+                  <span>Rent_Car.com</span>
                 </Link>
               </h1>
             </div>
             <p className="footer__logo-content">
-              <p>Kami adalah penyedia layanan rental mobil modern yang mengutamakan keamanan dan transparansi. Dengan integrasi teknologi terkini, kami memastikan setiap perjalanan Anda menjadi pengalaman yang aman, nyaman, dan tak terlupakan.</p>
+              <p>
+                Kami adalah penyedia layanan rental mobil modern yang
+                mengutamakan keamanan dan transparansi. Dengan integrasi
+                teknologi terkini, kami memastikan setiap perjalanan Anda
+                menjadi pengalaman yang aman, nyaman, dan tak terlupakan.
+              </p>
             </p>
           </Col>
 
@@ -84,19 +87,19 @@ const Footer = () => {
               <div className="newsletter">
                 <input type="email" placeholder="Email" />
                 <span>
-                  <i class="ri-send-plane-line"></i>
+                  <i className ="ri-send-plane-line"></i>
                 </span>
               </div>
             </div>
           </Col> */}
 
-          <Col lg="12">
+          {/* <Col lg="12">
             <div className="footer__bottom">
               <p className="section__description d-flex align-items-center justify-content-center gap-1 pt-4">
-                <i class="ri-copyright-line"></i>Copyright {year}, Copyright 2026, Developed by Kel 3. Original template by Muhibur Rahman.
+                <i className ="ri-copyright-line"></i>Copyright {year}, Developed by Kel 3. Original template by Muhibur Rahman.
               </p>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </footer>

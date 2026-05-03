@@ -29,8 +29,10 @@ export const addBooking = (carId, dates, userInfo = {}) => {
     carId: carId,
     dates: dates,
     userInfo: userInfo,
+    paymentMethod: userInfo.paymentMethod || 'unknown',
+    proof: userInfo.proof || null,
     timestamp: new Date().toISOString(),
-    status: 'confirmed'
+    status: 'pending_proof',
   };
 
   const updatedBookings = [...bookings, newBooking];
@@ -41,24 +43,26 @@ export const addBooking = (carId, dates, userInfo = {}) => {
 // Check if car is available for selected dates
 export const isCarAvailable = (carId, selectedDates) => {
   const bookings = getBookings();
-  const carBookings = bookings.filter(booking => booking.carId === carId);
+  const carBookings = bookings.filter((booking) => booking.carId === carId);
 
-  return !carBookings.some(booking =>
-    booking.dates.some(date => selectedDates.includes(date))
+  return !carBookings.some((booking) =>
+    booking.dates.some((date) => selectedDates.includes(date))
   );
 };
 
 // Get booked dates for a car
 export const getBookedDates = (carId) => {
   const bookings = getBookings();
-  const carBookings = bookings.filter(booking => booking.carId === carId);
-  return carBookings.flatMap(booking => booking.dates);
+  const carBookings = bookings.filter((booking) => booking.carId === carId);
+  return carBookings.flatMap((booking) => booking.dates);
 };
 
 // Cancel booking
 export const cancelBooking = (bookingId) => {
   const bookings = getBookings();
-  const filteredBookings = bookings.filter(booking => booking.id !== bookingId);
+  const filteredBookings = bookings.filter(
+    (booking) => booking.id !== bookingId
+  );
   saveBookings(filteredBookings);
   return filteredBookings;
 };
@@ -66,5 +70,5 @@ export const cancelBooking = (bookingId) => {
 // Get user's bookings
 export const getUserBookings = (userId) => {
   const bookings = getBookings();
-  return bookings.filter(booking => booking.userInfo.id === userId);
+  return bookings.filter((booking) => booking.userInfo.id === userId);
 };

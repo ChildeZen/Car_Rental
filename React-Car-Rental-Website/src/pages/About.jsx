@@ -1,20 +1,19 @@
-import React from "react";
+import React from 'react';
 
-import CommonSection from "../components/UI/CommonSection";
-import Helmet from "../components/Helmet/Helmet";
-import AboutSection from "../components/UI/AboutSection";
-import { Container, Row, Col } from "reactstrap";
-import BecomeDriverSection from "../components/UI/BecomeDriverSection";
+import CommonSection from '../components/UI/CommonSection';
+import Helmet from '../components/Helmet/Helmet';
+import AboutSection from '../components/UI/AboutSection';
+import { Container, Row, Col } from 'reactstrap';
 
-import driveImg from "../assets/all-images/drive.jpg";
-import OurMembers from "../components/UI/OurMembers";
-import "../styles/about.css";
+import driveImg from '../assets/all-images/drive.jpg';
+import OurMembers from '../components/UI/OurMembers';
+import '../styles/about.css';
 
 const About = () => {
   return (
     <Helmet title="About">
       <CommonSection title="About Us" />
-      <AboutSection aboutClass="aboutPage" />
+      <AboutSection aboutclassName="aboutPage" />
 
       <section className="about__page-section">
         <Container>
@@ -32,16 +31,26 @@ const About = () => {
                 </h2>
 
                 <p className="section__description">
-                  Kami menghadirkan standar baru dalam industri rental mobil dengan mengintegrasikan sistem verifikasi armada yang transparan dan aman. Melalui pendekatan berbasis teknologi, kami memastikan setiap riwayat pemeliharaan dan kondisi unit dapat diakses dengan jelas, memberikan Anda kepercayaan penuh dalam setiap perjalanan.
+                  Kami menghadirkan standar baru dalam industri rental mobil
+                  dengan mengintegrasikan sistem verifikasi armada yang
+                  transparan dan aman. Melalui pendekatan berbasis teknologi,
+                  kami memastikan setiap riwayat pemeliharaan dan kondisi unit
+                  dapat diakses dengan jelas, memberikan Anda kepercayaan penuh
+                  dalam setiap perjalanan.
                 </p>
 
                 <p className="section__description">
-                  Bukan sekadar transportasi, kami menawarkan solusi mobilitas masa depan yang efisien dan terenkripsi. Dengan dukungan tim teknis yang solid, setiap transaksi dan proses pemesanan dirancang untuk berjalan secara real-time, memastikan keamanan data dan kenyamanan Anda tetap menjadi prioritas utama di era digital ini.
+                  Bukan sekadar transportasi, kami menawarkan solusi mobilitas
+                  masa depan yang efisien dan terenkripsi. Dengan dukungan tim
+                  teknis yang solid, setiap transaksi dan proses pemesanan
+                  dirancang untuk berjalan secara real-time, memastikan keamanan
+                  data dan kenyamanan Anda tetap menjadi prioritas utama di era
+                  digital ini.
                 </p>
 
                 <div className=" d-flex align-items-center gap-3 mt-4">
                   <span className="fs-4">
-                    <i class="ri-phone-line"></i>
+                    <i className="ri-phone-line"></i>
                   </span>
 
                   <div>
@@ -55,7 +64,7 @@ const About = () => {
         </Container>
       </section>
 
-      <BecomeDriverSection />
+      {/* <BecomeDriverSection /> */}
 
       <section>
         <Container>

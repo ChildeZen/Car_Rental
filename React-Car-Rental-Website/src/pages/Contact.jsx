@@ -1,27 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
-import Helmet from "../components/Helmet/Helmet";
-import CommonSection from "../components/UI/CommonSection";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col, Form, FormGroup, Input } from 'reactstrap';
+import Helmet from '../components/Helmet/Helmet';
+import CommonSection from '../components/UI/CommonSection';
 
-import "../styles/contact.css";
+import '../styles/contact.css';
 
 const socialLinks = [
   {
-    url: "#",
-    icon: "ri-facebook-line",
+    url: '#',
+    icon: 'ri-facebook-line',
   },
   {
-    url: "#",
-    icon: "ri-instagram-line",
+    url: '#',
+    icon: 'ri-instagram-line',
   },
   {
-    url: "#",
-    icon: "ri-linkedin-line",
+    url: '#',
+    icon: 'ri-linkedin-line',
   },
   {
-    url: "#",
-    icon: "ri-twitter-line",
+    url: '#',
+    icon: 'ri-twitter-line',
   },
 ];
 
@@ -59,9 +59,7 @@ const Contact = () => {
             <Col lg="5" md="5">
               <div className="contact__info">
                 <h6 className="fw-bold">Contact Information</h6>
-                <p className="section__description mb-0">
-                  123 bandung, indo
-                </p>
+                <p className="section__description mb-0">123 bandung, indo</p>
                 <div className=" d-flex align-items-center gap-2">
                   <h6 className="fs-6 mb-0">Phone:</h6>
                   <p className="section__description mb-0">+621234567889</p>
@@ -81,7 +79,7 @@ const Contact = () => {
                       key={index}
                       className="social__link-icon"
                     >
-                      <i class={item.icon}></i>
+                      <i className={item.icon}></i>
                     </Link>
                   ))}
                 </div>

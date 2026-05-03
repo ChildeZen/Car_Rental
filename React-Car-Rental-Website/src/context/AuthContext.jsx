@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 export const AuthContext = createContext();
 
@@ -9,10 +9,10 @@ export const AuthProvider = ({ children }) => {
 
   // Check if user is already logged in on mount
   useEffect(() => {
-    const storedLogin = localStorage.getItem("isLoggedIn");
-    const storedUser = localStorage.getItem("user");
+    const storedLogin = localStorage.getItem('isLoggedIn');
+    const storedUser = localStorage.getItem('user');
 
-    if (storedLogin === "true" && storedUser) {
+    if (storedLogin === 'true' && storedUser) {
       setIsLoggedIn(true);
       setUser(JSON.parse(storedUser));
     }
@@ -22,15 +22,15 @@ export const AuthProvider = ({ children }) => {
   const login = useCallback((userData) => {
     setUser(userData);
     setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('user', JSON.stringify(userData));
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("user");
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('user');
   }, []);
 
   return (

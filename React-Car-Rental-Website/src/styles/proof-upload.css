@@ -1,0 +1,38 @@
+.proof-modal .modal-dialog {
+  max-width: 500px;
+}
+
+.proof-modal .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.proof-modal .form-control {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+}
+
+.proof-modal .form-control:focus {
+  border-color: #f9a826;
+  box-shadow: 0 0 0 0.2rem rgba(249, 168, 38, 0.25);
+}
+
+.img-thumbnail {
+  border-radius: 8px;
+  border: 2px solid #dee2e6;
+}
+
+.proof-modal .btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  font-weight: 600;
+}
+
+.proof-modal .btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.alert {
+  border-radius: 8px;
+}
