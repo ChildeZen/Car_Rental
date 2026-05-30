@@ -4,8 +4,6 @@ import CommonSection from '../components/UI/CommonSection';
 import Helmet from '../components/Helmet/Helmet';
 import AboutSection from '../components/UI/AboutSection';
 import { Container, Row, Col } from 'reactstrap';
-
-import driveImg from '../assets/all-images/drive.jpg';
 import OurMembers from '../components/UI/OurMembers';
 import '../styles/about.css';
 
@@ -20,7 +18,7 @@ const About = () => {
           <Row>
             <Col lg="6" md="6" sm="12">
               <div className="about__page-img">
-                <img src={driveImg} alt="" className="w-100 rounded-3" />
+                <img src='https://i.pinimg.com/1200x/d4/ff/e6/d4ffe666159cacec7b5864be7078f977.jpg' alt="" className="rounded-3" style={{ width: '100%', height: '400px', objectFit: 'cover' }}/>
               </div>
             </Col>
 
@@ -73,8 +71,8 @@ const About = () => {
               <h6 className="section__subtitle">Experts</h6>
               <h2 className="section__title">Our Members</h2>
             </Col>
-            <OurMembers />
           </Row>
+          <OurMembers />
         </Container>
       </section>
     </Helmet>

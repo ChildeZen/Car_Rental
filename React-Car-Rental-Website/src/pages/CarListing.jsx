@@ -16,7 +16,7 @@ const CarListing = () => {
 
   useEffect(() => {
     if (location.state?.filters) {
-      const { journeyDate, journeyTime, brand, searchQuery } = location.state.filters;
+      const { journeyDate, brand, searchQuery } = location.state.filters;
       if (journeyDate) {
         setSelectedDates([journeyDate]);
       }
@@ -39,23 +39,6 @@ const CarListing = () => {
 
   const handleFilterCategoryChange = (e) => {
     setFilterCategory(e.target.value);
-  };
-
-  const handleDateSelect = (dates) => {
-    setSelectedDates(dates);
-  };
-
-  // Helper function to get all dates between two dates
-  const getDatesBetween = (startDate, endDate) => {
-    const dates = [];
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-      dates.push(date.toISOString().split('T')[0]);
-    }
-
-    return dates;
   };
 
   const uniqueBrands = [...new Set(carData.map((car) => car.brand))];
@@ -120,30 +103,6 @@ const CarListing = () => {
                     </option>
                   ))}
                 </select>
-
-                {/* <span className=" d-flex align-items-center gap-2">
-                  <i className="ri-calendar-line"></i> Select Dates
-                </span>
-
-                <div className="d-flex gap-2">
-                  <input
-                    type="date"
-                    onChange={(e) => handleDateSelect([e.target.value])}
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                  <span>to</span>
-                  <input
-                    type="date"
-                    onChange={(e) => {
-                      const fromDate = document.querySelector('input[type="date"]:first-of-type').value;
-                      if (fromDate) {
-                        const dates = getDatesBetween(fromDate, e.target.value);
-                        handleDateSelect(dates);
-                      }
-                    }}
-                    min={new Date().toISOString().split('T')[0]}
-                  /> */}
-                {/* </div> */}
               </div>
             </Col>
 

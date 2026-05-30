@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/booking-form.css';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Alert,
-} from 'reactstrap';
+import {Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert,} from 'reactstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const BookingForm = ({ bookingData, onChange, onBookingSubmit, carId, bookedDates = [] }) => {
   const [simPhoto, setSimPhoto] = useState(null);
@@ -99,20 +91,41 @@ const BookingForm = ({ bookingData, onChange, onBookingSubmit, carId, bookedDate
           onChange={onChange}
         />
       </FormGroup>
-
+ 
       <FormGroup className="booking__form d-inline-block me-4 mb-4">
-        <input
-          name="journeyDate"
-          type="date"
-          min={today}
-          required
-          disabled={bookedDates.includes(bookingData.journeyDate)}
-          value={bookingData.journeyDate}
-          onChange={onChange}
+        <DatePicker
+          selected={bookingData.journeyDate ? new Date(bookingData.journeyDate) : null}
+          onChange={(date) => onChange({ target: { name: 'journeyDate', value: date.toISOString().split('T')[0] } })}
+          minDate={new Date()}
+          placeholderText="Tanggal Mulai"
+          dateFormat="dd/MM/yyyy"
+          highlightDates={[
+            {
+              "react-datepicker__day--booked-date": bookedDates.map(d => new Date(d))
+            }
+          ]}
+          excludeDates={bookedDates.map(d => new Date(d))}
+          className="booking__form"
         />
-
       </FormGroup>
+
       <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <DatePicker
+          selected={bookingData.endDate ? new Date(bookingData.endDate) : null}
+          onChange={(date) => onChange({ target: { name: 'endDate', value: date.toISOString().split('T')[0] } })}
+          minDate={bookingData.journeyDate ? new Date(bookingData.journeyDate) : new Date()}
+          placeholderText="Tanggal Selesai"
+          dateFormat="dd/MM/yyyy"
+          highlightDates={[
+            {
+              "react-datepicker__day--booked-date": bookedDates.map(d => new Date(d))
+            }
+          ]}
+          excludeDates={bookedDates.map(d => new Date(d))}
+          className="booking__form"
+        />
+      </FormGroup>
+      {/* <FormGroup className="booking__form d-inline-block ms-1 mb-4">
         <input
           name="journeyTime"
           type="time"
@@ -121,7 +134,8 @@ const BookingForm = ({ bookingData, onChange, onBookingSubmit, carId, bookedDate
           value={bookingData.journeyTime}
           onChange={onChange}
         />
-      </FormGroup>
+      </FormGroup> */}
+
 
       <FormGroup>
         <textarea
@@ -159,9 +173,9 @@ const BookingForm = ({ bookingData, onChange, onBookingSubmit, carId, bookedDate
         <small className="text-muted">JPG/PNG/JPEG, max 5MB</small>
       </FormGroup>
 
-      <button className="btn reserve__btn mt-4" type="submit">
+      {/* <button className="btn reserve__btn mt-4" type="submit">
         Kirim Reservasi
-      </button>
+      </button> */}
     </Form>
   );
 };

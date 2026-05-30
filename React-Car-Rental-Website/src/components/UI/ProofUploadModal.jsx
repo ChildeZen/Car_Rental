@@ -114,7 +114,7 @@ const ProofUploadModal = ({
               type="submit"
               disabled={!proofFile || uploading}
               className={
-                uploading ? 'spinner-border spinner-border-sm me-2' : ''
+                uploading ? '' : ''
               }
             >
               {uploading ? 'Mengunggah...' : 'Konfirmasi Reservasi'}

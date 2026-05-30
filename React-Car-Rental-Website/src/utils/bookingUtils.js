@@ -70,5 +70,29 @@ export const cancelBooking = (bookingId) => {
 // Get user's bookings
 export const getUserBookings = (userId) => {
   const bookings = getBookings();
-  return bookings.filter((booking) => booking.userInfo.id === userId);
+  return bookings.filter((booking) => booking.userInfo?.userId === userId);
 };
+
+// Cek booking selesai milik user
+export const getCompletedBookings = (userId) => {
+  const bookings = getBookings();
+  const today = new Date().toISOString().split('T')[0];
+  return bookings.filter(
+    (b) => b.userInfo?.userId === userId && b.userInfo?.endDate <= today
+  );
+};
+
+// Simpan review
+export const saveReview = (carId, bookingId, reviewData) => {
+  const reviews = JSON.parse(localStorage.getItem('carReviews') || '[]');
+  reviews.push({ carId, bookingId, ...reviewData, timestamp: new Date().toISOString() });
+  localStorage.setItem('carReviews', JSON.stringify(reviews));
+};
+
+// Cek apakah booking sudah direview
+export const hasReviewed = (bookingId) => {
+  const reviews = JSON.parse(localStorage.getItem('carReviews') || '[]');
+  return reviews.some((r) => r.bookingId === bookingId);
+};
+
+

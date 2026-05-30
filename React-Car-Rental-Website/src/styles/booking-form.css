@@ -1,5 +1,6 @@
 .booking__form {
-  /* width: 47.5%; */ /* Removed as we use Bootstrap grid now */
+  /* width: 47.5%; */
+  /* Removed as we use Bootstrap grid now */
 }
 
 .booking__form input {
@@ -7,6 +8,19 @@
   border: 1px solid #7c8a972a;
   color: #7c8a97;
   width: 100%;
+}
+
+/* Tanggal yang sudah dibooking */
+.react-datepicker__day--booked-date {
+  background-color: #ff4d4d !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* Hover pada tanggal booked */
+.react-datepicker__day--booked-date:hover {
+  background-color: #cc0000 !important;
+  cursor: not-allowed;
 }
 
 .booking__form select,
@@ -32,7 +46,8 @@
 
 @media only screen and (max-width: 768px) {
   .booking__form {
-    /* width: 100%; */ /* Not needed with grid */
+    /* width: 100%; */
+    /* Not needed with grid */
   }
 
   .booking__form input,

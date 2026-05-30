@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import '../../styles/about-section.css';
-import aboutImg from '../../assets/all-images/cars-img/mercedes-offer.png';
 
 const AboutSection = ({ aboutClass }) => {
   return (
@@ -10,11 +9,11 @@ const AboutSection = ({ aboutClass }) => {
       style={
         aboutClass === 'aboutPage'
           ? { marginTop: '0px' }
-          : { marginTop: '280px' }
+          : { marginTop: '80px' }
       }
     >
       <Container>
-        <Row>
+        <Row >
           <Col lg="6" md="6">
             <div className="about__section-content">
               <h4 className="section__subtitle">About Us</h4>
@@ -22,9 +21,9 @@ const AboutSection = ({ aboutClass }) => {
               <p className="section__description">
                 Selamat datang di platform rental mobil generasi terbaru. Kami
                 hadir untuk memberikan solusi transportasi yang praktis bagi
-                masyarakat Indonesia. Dengan koleksi armada yang lengkap—mulai
+                masyarakat Indonesia. Dengan koleksi armada yang lengkap mulai
                 dari mobil keluarga yang nyaman hingga kendaraan listrik yang
-                ramah lingkungan—kami memastikan perjalanan Anda selalu
+                ramah lingkungan kami memastikan perjalanan Anda selalu
                 menyenangkan. Didukung oleh teknologi blockchain, kami menjamin
                 proses booking yang instan dan transparansi biaya sejak awal.
               </p>
@@ -57,7 +56,7 @@ const AboutSection = ({ aboutClass }) => {
 
           <Col lg="6" md="6">
             <div className="about__img">
-              <img src={aboutImg} alt="" className="w-100" />
+              <img src='https://i.pinimg.com/1200x/47/bf/a4/47bfa4d89f2158f3960e9bcd3a3b93f0.jpg' alt="" className="rounded-3" style={{ width: '100%', height: '400px', objectFit: 'cover' }} />
             </div>
           </Col>
         </Row>

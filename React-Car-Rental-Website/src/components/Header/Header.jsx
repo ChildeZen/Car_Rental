@@ -19,6 +19,10 @@ const navLinks = [
     display: 'Cars',
   },
   {
+    path: '/my-bookings',
+    display: 'My Bookings',
+  },
+  {
     path: '/contact',
     display: 'Contact',
   },
@@ -28,7 +32,6 @@ const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { isLoggedIn, user, logout } = useContext(AuthContext);
-  const [searchTerm, setSearchTerm] = useState('');
 
   const toggleMenu = () => menuRef.current.classList.toggle('menu__active');
 
@@ -169,7 +172,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="nav__right">
+            {/* <div className="nav__right">
               <form
                 className="search__box d-flex align-items-center gap-2"
                 style={{ width: '250px' }}
@@ -190,7 +193,7 @@ const Header = () => {
                   <i className="ri-search-line"></i>
                 </button>
               </form>
-            </div>
+            </div> */}
           </div>
         </Container>
       </div>

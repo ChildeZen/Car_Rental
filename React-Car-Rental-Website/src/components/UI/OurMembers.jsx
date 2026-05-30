@@ -2,11 +2,14 @@ import React from 'react';
 import '../../styles/our-member.css';
 import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const OUR__MEMBERS = [
   {
-    name: 'Jhon Doe',
-    experience: '5 years of experience',
+    name: 'Rafif Naufal Pratama',
+    experience: '3 years of experience',
     fbUrl: '#',
     instUrl: '#',
     twitUrl: '#',
@@ -16,7 +19,7 @@ const OUR__MEMBERS = [
   },
 
   {
-    name: 'David Lisa',
+    name: 'Fathi Arzaq Shidiq',
     experience: '5 years of experience',
     fbUrl: '#',
     instUrl: '#',
@@ -27,7 +30,7 @@ const OUR__MEMBERS = [
   },
 
   {
-    name: 'Hilton King',
+    name: 'I Made Rama Wijana Putra',
     experience: '5 years of experience',
     fbUrl: '#',
     instUrl: '#',
@@ -38,7 +41,7 @@ const OUR__MEMBERS = [
   },
 
   {
-    name: 'Jhon Doe',
+    name: 'Muhammad Daffa Arrahman',
     experience: '5 years of experience',
     fbUrl: '#',
     instUrl: '#',
@@ -47,44 +50,67 @@ const OUR__MEMBERS = [
     imgUrl:
       'https://i.pinimg.com/736x/d4/f1/43/d4f143d7b8ff5933b353482adc152b90.jpg',
   },
+  {
+    name: 'Raffa Al Rasyid',
+    experience: '5 years of experience',
+    fbUrl: '#',
+    instUrl: 'https://www.instagram.com/_raffa_al/',
+    twitUrl: '#',
+    linkedinUrl: 'https://www.linkedin.com/in/raffa-al-rasyid',
+    imgUrl:
+      'https://i.pinimg.com/736x/0b/f7/45/0bf745214c593822930999fc1ac1ab90.jpg',
+  },
 ];
 
 const OurMembers = () => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    autoplay: true,
+    speed: 980,
+    autoplaySpeed: 1900,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 992,
+        settings: { slidesToShow: 3 }
+      },
+      {
+        breakpoint: 576,
+        settings: { slidesToShow: 2 }
+      }
+    ]
+  };
+
   return (
-    <>
+    <Slider {...settings}>
       {OUR__MEMBERS.map((item, index) => (
-        <Col lg="3" md="3" sm="4" xs="6" key={index} className="mb-4">
+        <div key={index} className="px-2">
           <div className="single__member">
             <div className="single__member-img">
               <img src={item.imgUrl} alt="" className="w-100" />
-
               <div className="single__member-social">
-                <Link to={item.fbUrl}>
+                <a href={item.fbUrl} target="_blank" rel="noreferrer">
                   <i className="ri-facebook-line"></i>
-                </Link>
-                <Link to={item.twitUrl}>
+                </a>
+                <a href={item.twitUrl} target="_blank" rel="noreferrer">
                   <i className="ri-twitter-line"></i>
-                </Link>
-
-                <Link to={item.linkedinUrl}>
+                </a>
+                <a href={item.linkedinUrl} target="_blank" rel="noreferrer">
                   <i className="ri-linkedin-line"></i>
-                </Link>
-
-                <Link to={item.instUrl}>
+                </a>
+                <a href={item.instUrl} target="_blank" rel="noreferrer">
                   <i className="ri-instagram-line"></i>
-                </Link>
+                </a>
               </div>
             </div>
-
             <h6 className="text-center mb-0 mt-3">{item.name}</h6>
-            <p className="section__description text-center">
-              {item.experience}
-            </p>
+            <p className="section__description text-center">{item.experience}</p>
           </div>
-        </Col>
+        </div>
       ))}
-    </>
+    </Slider>
   );
 };
-
 export default OurMembers;

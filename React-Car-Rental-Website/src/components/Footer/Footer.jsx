@@ -19,10 +19,6 @@ const quickLinks = [
     path: '/cars',
     display: 'Car Listing',
   },
-  {
-    path: '/blogs',
-    display: 'Blog',
-  },
 
   {
     path: '/contact',
@@ -31,8 +27,6 @@ const quickLinks = [
 ];
 
 const Footer = () => {
-  const date = new Date();
-  const year = date.getFullYear();
   return (
     <footer className="footer">
       <Container>
@@ -46,14 +40,14 @@ const Footer = () => {
                 </Link>
               </h1>
             </div>
-            <p className="footer__logo-content">
+            <div className="footer__logo-content">
               <p>
                 Kami adalah penyedia layanan rental mobil modern yang
                 mengutamakan keamanan dan transparansi. Dengan integrasi
                 teknologi terkini, kami memastikan setiap perjalanan Anda
                 menjadi pengalaman yang aman, nyaman, dan tak terlupakan.
               </p>
-            </p>
+            </div>
           </Col>
 
           <Col lg="7" md="12" sm="12">

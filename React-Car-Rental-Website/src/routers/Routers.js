@@ -12,9 +12,9 @@ const Home = lazy(() => import('../pages/Home'));
 const About = lazy(() => import('../pages/About'));
 const CarListing = lazy(() => import('../pages/CarListing'));
 const CarDetails = lazy(() => import('../pages/CarDetails'));
-const BlogDetails = lazy(() => import('../pages/BlogDetails'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 const Contact = lazy(() => import('../pages/Contact'));
+const MyBookings = lazy(() => import('../pages/MyBookings'));
 
 // 3. LOGIKA PROTECTED ROUTES
 const ProtectedRoute = ({ children }) => {
@@ -40,7 +40,6 @@ const Routers = () => {
         <Route path="/cars" element={<CarListing />} />
         <Route path="/cars/:slug" element={<CarDetails />} />
 
-        <Route path="/blogs/:slug" element={<BlogDetails />} />
         <Route path="/contact" element={<Contact />} />
 
         {/* Route untuk user yang belum login */}
@@ -61,6 +60,7 @@ const Routers = () => {
             </RegisterRoute>
           }
         />
+        <Route path="/my-bookings" element={<MyBookings />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

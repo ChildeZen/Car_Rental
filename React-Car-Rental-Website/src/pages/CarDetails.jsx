@@ -23,11 +23,38 @@ const CarDetails = () => {
     fromAddress: '',
     toAddress: '',
     journeyDate: '',
+    endDate: '',
     journeyTime: '',
     notes: '',
   });
 
   const [paymentMethod, setPaymentMethod] = useState('');
+
+  const bookingDatesRange = (startDate, endDate) => {
+    if (!startDate || !endDate) return [];
+    const dates = [];
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+      dates.push(date.toISOString().split('T')[0]);
+    }
+    return dates;
+  };
+
+  const parsePricePerDay = (price) => Number(String(price).replace(/[^0-9]/g, ''));
+
+  const getDaysAndTotalPrice = () => {
+    const { journeyDate, endDate } = bookingData;
+    if (!journeyDate || !endDate) return { days: 0, totalPrice: 0 };
+
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const days = Math.round((new Date(endDate) - new Date(journeyDate)) / msPerDay) + 1;
+    const pricePerDay = parsePricePerDay(singleCarItem?.price);
+    const totalPrice = days > 0 ? pricePerDay * days : 0;
+    return { days, totalPrice };
+  };
+
 
   const [showProofModal, setShowProofModal] = useState(false);
 
@@ -44,6 +71,9 @@ const CarDetails = () => {
 
   const navigate = useNavigate();
   const { isLoggedIn, user } = useContext(AuthContext);
+
+  const today = new Date().toISOString().split('T')[0];
+  const isAvailableToday = !bookedDates.includes(today);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,12 +98,14 @@ const CarDetails = () => {
     if (
       !bookingData.firstName ||
       !bookingData.email ||
-      !bookingData.journeyDate
+      !bookingData.journeyDate ||
+      !bookingData.endDate
     ) {
       alert('Silakan lengkapi data reservasi');
       return;
     }
-    const dates = [bookingData.journeyDate];
+    const dates = bookingDatesRange(bookingData.journeyDate, bookingData.endDate);
+
     if (!isCarAvailable(singleCarItem.id, dates)) {
       alert('Tanggal yang dipilih sudah dibooking oleh user lain. Pilih tanggal lain.');
       return;
@@ -88,16 +120,38 @@ const CarDetails = () => {
       return;
     }
     const carId = singleCarItem.id;
-    const dates = [bookingData.journeyDate];
+    const dates = bookingDatesRange(bookingData.journeyDate, bookingData.endDate);
+    const { days, totalPrice } = getDaysAndTotalPrice();
+
     const fullInfo = {
       ...data,
       userId: user?.id,
+      startDate: bookingData.journeyDate,
+      endDate: bookingData.endDate,
+      days,
+      pricePerDay: parsePricePerDay(singleCarItem.price),
+      totalPrice,
+      dpAmount: Math.round(totalPrice * 0.2),
     };
+
     addBooking(carId, dates, fullInfo);
+
     alert('Reservasi berhasil dikonfirmasi dengan bukti DP!');
     setShowSuccess(true);
     setShowProofModal(false);
   };
+
+  const staticReviews = singleCarItem?.reviews || [];
+
+  const [dynamicReviews, setDynamicReviews] = useState([]);
+
+  useEffect(() => {
+    const allReviews = JSON.parse(localStorage.getItem('carReviews') || '[]');
+    const carReviews = allReviews.filter((r) => r.carId === singleCarItem?.id);
+    setDynamicReviews(carReviews);
+  }, [singleCarItem]);
+
+  const reviews = [...staticReviews, ...dynamicReviews];
 
   if (!singleCarItem) {
     return (
@@ -143,7 +197,7 @@ const CarDetails = () => {
                 <div className="d-flex align-items-center gap-5 mb-4 mt-3">
                   <h6 className="rent__price fw-bold fs-4">
                     {/* Perbaikan format harga agar dinamis */}
-                    Rp.{singleCarItem.price}.000.00 / Day
+                    Rp. {singleCarItem.price.toLocaleString('id-ID')} / Day
                   </h6>
 
                   <span className="d-flex align-items-center gap-2">
@@ -192,8 +246,8 @@ const CarDetails = () => {
 
                 {/* Spesifikasi Baris 2 */}
                 <div
-                  className="d-flex align-items-center mt-3"
-                  style={{ columnGap: '2.8rem' }}
+                  className="d-flex align-items-center mt-3 flex-wrap"
+                  style={{ columnGap: '2.8rem', rowGap: 10 }}
                 >
                   <span className="d-flex align-items-center gap-1 section__description">
                     <i
@@ -217,10 +271,12 @@ const CarDetails = () => {
                     {singleCarItem.brand}
                   </span>
                 </div>
+
               </div>
             </Col>
 
-            {/* Tambahkan ini di dalam Col lg="7" atau tempat yang sesuai di CarDetails.jsx */}
+
+            {/* Syarat Lepas Kunci */}
             <div className="requirements__box mt-4 p-4" style={{ backgroundColor: "#f0f0f0", borderRadius: "10px" }}>
               <h5 className="mb-3 fw-bold" style={{ color: "#000d6b" }}>
                 <i className="ri-information-line"></i> Syarat Sewa Lepas Kunci
@@ -254,9 +310,93 @@ const CarDetails = () => {
               </p>
             </div>
 
-            {/* Bagian Form Booking (Kiri) */}
-            <Col lg="7" className="mt-5">
-              <div className="booking-info mt-5 p-4 shadow-sm rounded-3">
+            {/* Vehicle Condition */}
+            <Col lg="12" className="mt-4">
+              <div className="p-4" style={{ backgroundColor: "#ffffff", borderRadius: "10px" }}>
+                <h5 className="fw-bold mb-4" style={{ color: "#000d6b" }}>
+                  <i className="ri-car-line"></i> Vehicle Condition
+                </h5>
+
+                <Row className="mb-4">
+                  {/* Kondisi Kendaraan */}
+                  {singleCarItem.conditions?.map((c, i) => (
+                    <Col lg="6" md="6" sm="6" key={i} className="mb-3">
+                      <div className="d-flex align-items-center justify-content-between" style={{ maxWidth: '280px', gap: '12px' }}>
+                        <span className="section__description mb-0 fw-bold">{c.label}</span>
+                        <span
+                          className="badge"
+                          style={{
+                            backgroundColor: c.status ? '#28a745' : '#dc3545',
+                            color: 'white',
+                            padding: '5px 12px',
+                            fontSize: '12px'
+                          }}
+                        >
+                          {c.status ? 'Aman' : 'Tidak Aman'}
+                        </span>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+
+                {/* Status Ketersediaan Mobil */}
+                <Row className="d-flex justify-content-center">
+                  <Col >
+                    <div
+                      className="p-3 rounded-3 text-center"
+                      style={{
+                        backgroundColor: isAvailableToday ? '#d4edda' : '#f8d7da',
+                        border: `1px solid ${isAvailableToday ? '#000000' : '#73000c'}`
+                      }}
+                    >
+                      <i
+                        className={isAvailableToday ? 'ri-checkbox-circle-fill' : 'ri-close-fill'}
+                        style={{ color: isAvailableToday ? '#28a745' : '#dc3545', fontSize: '24px' }}
+                      ></i>
+                      <p className="mb-0 fw-bold mt-1" style={{ color: isAvailableToday ? '#28a745' : '#dc3545' }}>
+                        {isAvailableToday ? 'Kendaraan tersedia untuk Hari Ini' : 'Kendaraan Sedang Disewa'}
+                      </p>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+
+            {/* Section Reviews */}
+            <Col lg="12" className="mt-5">
+              <h5 className="fw-bold mb-4">Review Pelanggan</h5>
+              {reviews.length === 0 ? (
+                <p className="section__description">Belum ada review untuk mobil ini.</p>
+              ) : (
+                <Row>
+                  {reviews.map((review) => (
+                    <Col lg="4" md="6" sm="12" className="mb-4" key={review.id}>
+                      <div className="p-3 shadow-sm rounded-3" style={{ backgroundColor: "white" }}>
+                        <p className="section__description">{review.comment}</p>
+                        <div className="d-flex align-items-center gap-3 mt-3">
+                          <img
+                            src={review.photoUrl}
+                            alt={review.user}
+                            className="rounded-circle"
+                            style={{ width: "45px", height: "45px", objectFit: "cover" }}
+                          />
+                          <div>
+                            <h6 className="mb-0">{review.user}</h6>
+                            <span style={{ color: "#f9a826" }}>
+                              {"⭐".repeat(review.rating)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              )}
+            </Col>
+
+            {/* Booking Information  */}
+            <Col lg="7" className="mt-3">
+              <div className="booking-info p-4 shadow-sm rounded-3">
                 <h5 className="mb-4 fw-bold">Booking Information</h5>
                 <BookingForm
                   bookingData={bookingData}
@@ -268,10 +408,27 @@ const CarDetails = () => {
               </div>
             </Col>
 
-            {/* Bagian Metode Pembayaran (Kanan) */}
+            {/* Bagian Metode Pembayaran */}
             <Col lg="5" className="mt-5">
               <div className="payment__info mt-5 p-4 shadow-sm rounded-3">
-                <h5 className="mb-4 fw-bold">Payment Method</h5>
+                <div
+                  className="mt-0"
+                  style={{ backgroundColor: '#f8f9fa', borderRadius: '12px', padding: '12px 14px' }}
+                >
+                  <div className="d-flex align-items-center justify-content-between gap-3">
+                    <span style={{ color: '#000d6b', fontWeight: 700 }}>Total Harga</span>
+                    <span style={{ color: '#f9a826', fontWeight: 800, fontSize: '18px' }}>
+                      Rp. {getDaysAndTotalPrice().totalPrice.toLocaleString('id-ID')}
+                    </span>
+                  </div>
+                  <div className="small text-muted mt-1">
+                    {getDaysAndTotalPrice().days || 0} hari • DP 20%: Rp.{
+                      Math.round(getDaysAndTotalPrice().totalPrice * 0.2).toLocaleString('id-ID')
+                    }
+                  </div>
+                </div>
+
+                <h5 className="mb-4 fw-bold mt-4">Payment Method</h5>
                 <PaymentMethod
                   paymentMethod={paymentMethod}
                   onPaymentChange={onPaymentChange}
@@ -283,6 +440,7 @@ const CarDetails = () => {
                 </p>
               </div>
             </Col>
+
           </Row>
         </Container>
       </section>

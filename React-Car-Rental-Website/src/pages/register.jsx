@@ -26,14 +26,15 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username || password.length < 4) {
-      setError('Required: username, password (min 4 chars)');
+    if (!username || !email || password.length < 4) {
+      setError('Required: username, email, password (min 4 chars)');
       return;
-    }
+      };
 
-    setUploading(true);
     // Demo: auto-login
-    const userData = { username, email };
+    setUploading(true);
+    const userData = { id: Date.now(), username, email };
+    localStorage.setItem('registeredUser', JSON.stringify(userData));
     login(userData);
     setError('');
     setUploading(false);
