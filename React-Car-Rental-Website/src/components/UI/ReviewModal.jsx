@@ -5,18 +5,33 @@ import { saveReview } from '../../utils/bookingUtils';
 const ReviewModal = ({ isOpen, onClose, carId, bookingId, carName }) => {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
-  const [photo, setPhoto] = useState(null);
+  const [photos, setPhotos] = useState([]);
+
+  const handlePhotoChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newPhotos = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
+    setPhotos([...photos, ...newPhotos]);
+  };
+
+  const removePhoto = (index) => {
+    const updatedPhotos = photos.filter((_, i) => i !== index);
+    setPhotos(updatedPhotos);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const reviewData = {
       rating,
       comment,
-      photoUrl: photo ? URL.createObjectURL(photo) : null,
+      reviewPhotoUrls: photos.map(p => p.preview),
       user: JSON.parse(localStorage.getItem('user'))?.username || 'Anonymous',
     };
     saveReview(carId, bookingId, reviewData);
     alert('Terima kasih atas review kamu!');
+    setPhotos([]);
     onClose();
   };
 
@@ -53,19 +68,37 @@ const ReviewModal = ({ isOpen, onClose, carId, bookingId, carName }) => {
           </FormGroup>
 
           <FormGroup>
-            <Label>Foto (Opsional)</Label>
+            <Label>Foto (Opsional - Bisa lebih dari 1)</Label>
             <Input
               type="file"
               accept="image/*"
-              onChange={(e) => setPhoto(e.target.files[0])}
+              multiple
+              onChange={handlePhotoChange}
             />
-            {photo && (
-              <img
-                src={URL.createObjectURL(photo)}
-                alt="preview"
-                className="mt-2 rounded"
-                style={{ maxWidth: '150px' }}
-              />
+            {photos.length > 0 && (
+              <div className="mt-3">
+                <p className="small text-muted mb-2">Preview ({photos.length} foto):</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                  {photos.map((photo, index) => (
+                    <div key={index} style={{ position: 'relative' }}>
+                      <img
+                        src={photo.preview}
+                        alt={`preview-${index}`}
+                        className="rounded"
+                        style={{ maxWidth: '120px', maxHeight: '120px', objectFit: 'cover' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(index)}
+                        className="btn btn-sm btn-danger"
+                        style={{ position: 'absolute', top: '-5px', right: '-5px', padding: '2px 6px', fontSize: '12px' }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </FormGroup>
 

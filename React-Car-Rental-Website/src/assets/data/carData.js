@@ -182,7 +182,6 @@ const carData = [
                 user: 'Vera',
                 rating: 4.3,
                 comment: 'Bersih dan wangi. Bagus buat keluarga, kabin senyap saat jalan tol.',
-                photoUrl: 'https://i.pravatar.cc/150?img=25'
             }
         ],
         conditions: [
@@ -214,14 +213,12 @@ const carData = [
                 user: 'Rizky',
                 rating: 4.6,
                 comment: 'Muatan banyak, penumpang nyaman. AC kenceng dan tidak bocor.',
-                photoUrl: 'https://i.pravatar.cc/150?img=30'
             },
             {
                 id: 2,
                 user: 'Syifa',
                 rating: 4.2,
                 comment: 'Bagus untuk rombongan, kabin lega. Sopir lebih mudah karena visibilitas bagus.',
-                photoUrl: 'https://i.pravatar.cc/150?img=41'
             }
         ],
         conditions: [
@@ -253,14 +250,12 @@ const carData = [
                 user: 'Zidan',
                 rating: 4.8,
                 comment: 'Kelas banget. Kursi pijatnya enak, kabin senyap dan nyaman.',
-                photoUrl: 'https://i.pravatar.cc/150?img=52'
             },
             {
                 id: 2,
                 user: 'Sinta',
                 rating: 4.5,
                 comment: 'Dipakai buat wedding, tampil mewah. Semua tamu bilang nyaman.',
-                photoUrl: 'https://i.pravatar.cc/150?img=66'
             }
         ],
         conditions: [
@@ -292,14 +287,12 @@ const carData = [
                 user: 'Bima',
                 rating: 4.8,
                 comment: 'Smooth, berasa premium. Lampu dan fitur digitalnya mantap.',
-                photoUrl: 'https://i.pravatar.cc/150?img=77'
             },
             {
                 id: 2,
                 user: 'Dewi',
                 rating: 4.4,
                 comment: 'Nyaman buat perjalanan bisnis. Bagasi lega dan kabin tidak bising.',
-                photoUrl: 'https://i.pravatar.cc/150?img=88'
             }
         ],
         conditions: [
@@ -331,14 +324,12 @@ const carData = [
                 user: 'Kevin',
                 rating: 4.9,
                 comment: 'Suspensi empuk dan kabin senyap. Fitur infotainment-nya keren.',
-                photoUrl: 'https://i.pravatar.cc/150?img=101'
             },
             {
                 id: 2,
                 user: 'Salsabila',
                 rating: 4.6,
                 comment: 'Desain elegan, lampu ambient bikin makin premium. Nyaman buat meeting.',
-                photoUrl: 'https://i.pravatar.cc/150?img=110'
             }
         ],
         conditions: [

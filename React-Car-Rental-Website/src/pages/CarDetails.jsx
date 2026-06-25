@@ -62,6 +62,10 @@ const CarDetails = () => {
 
   const [bookedDates, setBookedDates] = useState([]);
 
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedReviewUser, setSelectedReviewUser] = useState(null);
+
   useEffect(() => {
     if (singleCarItem) {
       const dates = getBookedDates(singleCarItem.id);
@@ -152,6 +156,18 @@ const CarDetails = () => {
   }, [singleCarItem]);
 
   const reviews = [...staticReviews, ...dynamicReviews];
+
+  const handlePhotoClick = (photoUrl, userName) => {
+    setSelectedPhoto(photoUrl);
+    setSelectedReviewUser(userName);
+    setShowPhotoModal(true);
+  };
+
+  const closePhotoModal = () => {
+    setShowPhotoModal(false);
+    setSelectedPhoto(null);
+    setSelectedReviewUser(null);
+  };
 
   if (!singleCarItem) {
     return (
@@ -370,23 +386,86 @@ const CarDetails = () => {
               ) : (
                 <Row>
                   {reviews.map((review) => (
-                    <Col lg="4" md="6" sm="12" className="mb-4" key={review.id}>
+                    <Col lg="4" md="6" sm="12" className="mb-4" key={review.id || review.timestamp}>
                       <div className="p-3 shadow-sm rounded-3" style={{ backgroundColor: "white" }}>
-                        <p className="section__description">{review.comment}</p>
-                        <div className="d-flex align-items-center gap-3 mt-3">
-                          <img
-                            src={review.photoUrl}
-                            alt={review.user}
-                            className="rounded-circle"
-                            style={{ width: "45px", height: "45px", objectFit: "cover" }}
-                          />
+                        <div className="d-flex align-items-start justify-content-between mb-3">
                           <div>
-                            <h6 className="mb-0">{review.user}</h6>
-                            <span style={{ color: "#f9a826" }}>
-                              {"⭐".repeat(review.rating)}
-                            </span>
+                            <h6 className="mb-1">{review.user}</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <span style={{ color: "#f9a826", fontSize: "0.95rem" }}>
+                                {"⭐".repeat(Math.round(review.rating || 0))}
+                              </span>
+                              <small className="text-muted">{review.rating?.toFixed(1)}</small>
+                            </div>
                           </div>
                         </div>
+
+                        <p className="section__description">{review.comment}</p>
+
+                        {(review.reviewPhotoUrl || review.reviewPhotoUrls?.length > 0) && (
+                          <div className="d-flex flex-wrap gap-2 mt-3">
+                            {review.reviewPhotoUrls && review.reviewPhotoUrls.length > 0 ? (
+                              review.reviewPhotoUrls.map((photoUrl, idx) => (
+                                <div
+                                  key={idx}
+                                  className="rounded-3 overflow-hidden"
+                                  style={{
+                                    width: "90px",
+                                    height: "90px",
+                                    border: "1px solid #e9ecef",
+                                    cursor: "pointer",
+                                    transition: "transform 0.2s, box-shadow 0.2s"
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "scale(1.05)";
+                                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "scale(1)";
+                                    e.currentTarget.style.boxShadow = "none";
+                                  }}
+                                  onClick={() => handlePhotoClick(photoUrl, review.user)}
+                                  title="Klik untuk melihat foto review"
+                                >
+                                  <img
+                                    src={photoUrl}
+                                    alt={`Foto review ${review.user} - ${idx + 1}`}
+                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                  />
+                                </div>
+                              ))
+                            ) : (
+                              review.reviewPhotoUrl && (
+                                <div
+                                  className="rounded-3 overflow-hidden"
+                                  style={{
+                                    width: "90px",
+                                    height: "90px",
+                                    border: "1px solid #e9ecef",
+                                    cursor: "pointer",
+                                    transition: "transform 0.2s, box-shadow 0.2s"
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "scale(1.05)";
+                                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "scale(1)";
+                                    e.currentTarget.style.boxShadow = "none";
+                                  }}
+                                  onClick={() => handlePhotoClick(review.reviewPhotoUrl, review.user)}
+                                  title="Klik untuk melihat foto review"
+                                >
+                                  <img
+                                    src={review.reviewPhotoUrl}
+                                    alt={`Foto review ${review.user}`}
+                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                  />
+                                </div>
+                              )
+                            )}
+                          </div>
+                        )}
                       </div>
                     </Col>
                   ))}
@@ -444,6 +523,71 @@ const CarDetails = () => {
           </Row>
         </Container>
       </section>
+
+      {/* Modal untuk Foto Review */}
+      {showPhotoModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1050,
+          }}
+          onClick={closePhotoModal}
+        >
+          <div
+            style={{
+              position: "relative",
+              backgroundColor: "white",
+              borderRadius: "12px",
+              padding: "20px",
+              maxWidth: "600px",
+              maxHeight: "80vh",
+              overflow: "auto",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closePhotoModal}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                backgroundColor: "transparent",
+                border: "none",
+                fontSize: "28px",
+                cursor: "pointer",
+                color: "#666",
+              }}
+            >
+              ✕
+            </button>
+
+            <div style={{ textAlign: "center" }}>
+              <p style={{ marginBottom: "15px", color: "#666", fontSize: "14px" }}>
+                Foto Review dari <strong>{selectedReviewUser}</strong>
+              </p>
+              <img
+                src={selectedPhoto}
+                alt={`Foto review ${selectedReviewUser}`}
+                style={{
+                  width: "100%",
+                  maxHeight: "500px",
+                  borderRadius: "8px",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       <ProofUploadModal
         isOpen={showProofModal}
         onClose={() => setShowProofModal(false)}
