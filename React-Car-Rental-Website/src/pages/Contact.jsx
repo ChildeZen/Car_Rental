@@ -44,7 +44,7 @@ const Contact = () => {
                 </FormGroup>
                 <FormGroup className="contact__form">
                   <textarea
-                    rows="5"
+                    rows="8"
                     placeholder="Message"
                     className="textarea"
                   ></textarea>

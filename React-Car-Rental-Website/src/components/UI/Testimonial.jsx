@@ -100,23 +100,6 @@ const Testimonial = () => {
         </div>
       </div>
 
-      <div className="testimonial py-4 px-3">
-        <p className="section__description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus magni
-          explicabo molestias recusandae repudiandae, dolor, sapiente placeat
-          ab, animi eum minima nulla facere aliquam aut vitae quo pariatur
-          voluptate odit?
-        </p>
-
-        <div className="mt-3 d-flex align-items-center gap-4">
-          <img src= " " alt="" className="w-25 h-25 rounded-2" />
-
-          <div>
-            <h6 className="mb-0 mt-3">Daffa</h6>
-            <p className="section__description">Customer</p>
-          </div>
-        </div>
-      </div>
     </Slider>
   );
 };
